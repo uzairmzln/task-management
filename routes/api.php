@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\MailController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -12,6 +13,18 @@ use App\Http\Controllers\TaskController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::controller(MailController::class)->group(function (){
+
+    Route::get('/email/verify/{id}/{hash}', 'verify')
+        ->middleware(['signed'])
+        ->name('verification.verify');
+
+    Route::post('/email/resend', 'resendVerificationEmail')
+        ->middleware('auth:sanctum')
+        ->name('verification.send');
+});
+
 
 Route::middleware('auth:sanctum')->group(function(){
 

@@ -50,7 +50,7 @@ export function auth(){
     
             axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
     
-            router.push('/dashboard')
+            router.push('/email-verfication')
         } catch (error) {
             
             if (error.response && error.response.status === 422) {

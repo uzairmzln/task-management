@@ -1,9 +1,10 @@
 import { createWebHistory, createRouter } from 'vue-router'
-
+import EmailVerification from '../components/email/emailVerification.vue';
 import AuthView from '../components/pages/auth.vue';
 import DashboardView from '../components/pages/dashboard.vue';
 import LoginView from '../components/login.vue';
 import RegisterView from '../components/register.vue';
+
 const routes = [
   { 
     path: '/', 
@@ -26,6 +27,21 @@ const routes = [
     name: 'DashboardView',
     component: DashboardView,
     meta: { requiresAuth: true },
+  },
+  {
+    path: '/email-verfication',
+    name: 'EmailVerification',
+    component: EmailVerification
+  },
+  {
+    path: '/email-verification-failed',
+    name: 'EmailVerificationFailed',
+    component: () => import('@/components/email/emailVerificationFailed.vue')
+  },
+  {
+    path: '/email-verification-expired',
+    name: 'EmailVerificationExpired',
+    component: () => import('@/components/email/emailVerificationExpired.vue')
   }
 ]
 

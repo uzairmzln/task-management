@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -24,12 +25,15 @@ class AuthController extends Controller
 
         if ($user){
 
+            event(new Registered($user));
+            
             $token = $user->createToken('auth_token')->plainTextToken;
 
             return response()->json([
-                'message' => 'User registered successfully',
+                'message' => 'User registered successfully. Please check your email to verify your account.',
                 'user' => $user,
                 'token' => $token,
+                'email_verification_required' => true
             ], 201);
         }
 
