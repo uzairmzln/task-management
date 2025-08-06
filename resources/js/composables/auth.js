@@ -14,6 +14,7 @@ export function auth(){
     const token = ref('');
 
     const loginUser = async () => {
+        
         try {
 
             const response = await axios.post('/login', {
@@ -38,6 +39,7 @@ export function auth(){
     }
 
     const registerUser = async () => {
+        
         try{
 
             const response = await axios.post('/register', {
@@ -71,7 +73,9 @@ export function auth(){
     }
     
     const logoutUser = async () => {
+        
         try {
+        
             const response = await axios.post('/logout');
         } catch (error) {
 
@@ -81,6 +85,7 @@ export function auth(){
                 console.error('Logout error:', error);
             }
         } finally {
+        
             localStorage.removeItem('auth_token');
             delete axios.defaults.headers.common['Authorization'];
             router.push('/');
@@ -109,6 +114,7 @@ export function auth(){
 
                 errors.value = errs;
             } else {
+        
                 alertMessage.value = 'Something went wrong. Please try again.';
             }
         }
@@ -139,6 +145,7 @@ export function auth(){
 
                 errors.value = errs;
             } else {
+        
                 alertMessage.value = 'Something went wrong. Please try again.';
             }
         }
