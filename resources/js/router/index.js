@@ -4,6 +4,9 @@ import AuthView from '../components/pages/auth.vue';
 import DashboardView from '../components/pages/dashboard.vue';
 import LoginView from '../components/login.vue';
 import RegisterView from '../components/register.vue';
+import ForgotPasswordView from '../components/forgotPassword.vue';
+import ForgotPasswordForm from '../components/auth/forgotPasswordForm.vue';
+import ResetPasswordForm from '../components/auth/resetPasswordForm.vue';
 
 const routes = [
   { 
@@ -14,11 +17,26 @@ const routes = [
         path: '',
         name: 'LoginView',
         component: LoginView
-      }
-      ,{
+      },
+      {
         path: 'register',
         name: 'RegisterView',
         component: RegisterView
+      },
+      {
+        path: 'forgotpassword',
+        name: 'ForgotPassword',
+        component: ForgotPasswordView,
+      },
+      {
+        path: 'forgot-password',
+        name: 'ForgotPasswordForm',
+        component: ForgotPasswordForm
+      },
+      {
+        path: 'reset-password',
+        name: 'ResetPasswordForm',
+        component: ResetPasswordForm
       }
     ]
   },

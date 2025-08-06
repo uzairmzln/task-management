@@ -1,61 +1,85 @@
 <template>
-    <v-navigation-drawer
-        v-model="drawer"
-        :rail="rail"
-        permanent
-        @click="rail = false"
-    >
-        <v-list>
-            <v-list-item
-                prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-                title="John Leider"
-            >
-                <template v-slot:append>
-                    <v-btn
-                        icon="mdi-chevron-left"
-                        variant="text"
-                        @click.stop="rail = !rail"
-                    >
-                    </v-btn>
-                </template>
-            </v-list-item>
-        </v-list>
+  <v-navigation-drawer
+    v-model="drawer"
+    :rail="rail"
+    permanent
+    @click="rail = false"
+  >
+    <v-list>
+      <v-list-item
+        :prepend-avatar="user?.avatar || 'https://ui-avatars.com/api/?name=' + (user?.name || 'User')"
+        :title="user?.name || 'Loading...'"
+      >
+        <template v-slot:append>
+          <v-btn
+            icon="mdi-chevron-left"
+            variant="text"
+            @click.stop="rail = !rail"
+          >
+          </v-btn>
+        </template>
+      </v-list-item>
+    </v-list>
 
-        <v-divider></v-divider>
+    <v-divider></v-divider>
 
+    <!-- Main nav items -->
+    <v-list density="compact" nav>
+      <v-list-item
+        prepend-icon="mdi-home-city"
+        title="Home"
+        value="home"
+      />
+    </v-list>
+
+    <!-- Bottom section with Settings and Logout -->
+    <template v-slot:append>
+      <div>
+        <!-- Divider above settings -->
+        <v-divider />
+        
+        <!-- Settings list item -->
         <v-list density="compact" nav>
-            <v-list-item
-                prepend-icon="mdi-home-city"
-                title="Home"
-                value="home"
-            ></v-list-item>
-            <v-list-item
-                prepend-icon="mdi-account"
-                title="My Account"
-                value="account"
-            ></v-list-item>
-            <v-list-item
-                prepend-icon="mdi-account-group-outline"
-                title="Users"
-                value="users"
-            ></v-list-item>
+          <v-list-item
+            prepend-icon="mdi-cog-outline"
+            title="Settings"
+            value="settings"
+          />
         </v-list>
         
-        <template v-slot:append>
-            <div>
-                <v-btn block prepend-icon="mdi-logout" @click="logoutUser">
-                    <span v-if="!rail">Logout</span>
-                </v-btn>
-            </div>
-        </template>
-    </v-navigation-drawer>
+        <!-- Logout button -->
+         <v-list density="compact" nav>
+            <v-list-item
+                prepend-icon="mdi-logout"
+                title="Logout"
+                value="Logout"
+                @click="logoutUser"
+            />
+        </v-list>
+      </div>
+    </template>
+  </v-navigation-drawer>
 </template>
+
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted  } from 'vue';
 import { auth } from '../composables/auth';
+import { dashboard } from '../composables/dashboard';
 
 const drawer = ref(true);
 const rail = ref(true);
 const logoutUser = auth().logoutUser;
 
+const user = ref({});
+const {index} = dashboard();
+
+onMounted(async ()=> {
+    
+    await index();
+
+    const storedUser = localStorage.getItem('user_auth');
+    if (storedUser) {
+        user.value = JSON.parse(storedUser);
+    }
+});
 </script>

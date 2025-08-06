@@ -6,13 +6,18 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\MailController;
-
+use App\Http\Controllers\DashboardController;
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::controller(AuthController::class)->group(function (){
+    
+    Route::post('/register', 'register');
+    Route::post('/login', 'login');
+    Route::post('/forgot-password', 'forgotPassword');
+    Route::post('/reset-password', 'resetPassword');
+});
 
 Route::controller(MailController::class)->group(function (){
 
@@ -25,11 +30,15 @@ Route::controller(MailController::class)->group(function (){
         ->name('verification.send');
 });
 
-
-Route::middleware('auth:sanctum')->group(function(){
+Route::middleware(['auth:sanctum', 'verified'])->group(function (){
 
     Route::post('/logout', [AuthController::class, 'logout']);
     
+    Route::controller(DashboardController::class)->group(function (){
+
+        Route::get('/user', 'index');
+    });
+
     Route::controller(CategoryController::class)->group(function (){
         Route::post('/category/add', 'add');
         Route::post('/category/update/{id}', 'update');

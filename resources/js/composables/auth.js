@@ -11,6 +11,7 @@ export function auth(){
     const errors = ref(null);
     const alertMessage = ref('');
     const router = useRouter();
+    const token = ref('');
 
     const loginUser = async () => {
         try {
@@ -86,13 +87,73 @@ export function auth(){
         }
     }
 
+    const forgotPassword = async () => {
+
+        try {
+
+            const response = await axios.post('forgot-password', {
+                email: email.value,
+            });
+            
+            alertMessage.value = response.data.message;
+
+        } catch (error) {
+
+            if (error.response) {
+                
+                const errs = error.response.data.errors;
+
+                if (errs.email) {
+                    alertMessage.value = errs.email[0];
+                }
+
+                errors.value = errs;
+            } else {
+                alertMessage.value = 'Something went wrong. Please try again.';
+            }
+        }
+        
+    }
+
+    const resetPassword = async  ({ email, password, password_confirmation, token }) => {
+        
+        try {
+
+            const response = await axios.post('reset-password', {
+                email,
+                password,
+                password_confirmation,
+                token
+            });
+
+            alertMessage.value = response.data.message;
+        } catch (error) {
+
+            if (error.response) {
+                
+                const errs = error.response.data.errors;
+
+                if (errs.email) {
+                    alertMessage.value = errs.email[0];
+                }
+
+                errors.value = errs;
+            } else {
+                alertMessage.value = 'Something went wrong. Please try again.';
+            }
+        }
+    }
+
     return {
         name,
         email,
         password,
         password_confirmation,
+        token,
         errors,
         alertMessage,
+        forgotPassword,
+        resetPassword,
         loginUser,
         registerUser,
         logoutUser,

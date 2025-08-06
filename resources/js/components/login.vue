@@ -125,9 +125,9 @@
             ></v-text-field>
 
             <div class="text-right mb-6">
-                <a href="#" class="text-decoration-none text-body-2 forgot-link">
+                <router-link to="/forgotpassword" class="text-decoration-none text-body-2 forgot-link">
                     Forgot Password?
-                </a>
+                </router-link>
             </div>
 
             <v-btn
