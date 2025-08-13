@@ -28,6 +28,7 @@ class TaskController extends Controller
             'status' => $validation['status'],
             'date_from' => $validation['date_from'],
             'date_to' => $validation['date_to'],
+            'created_by' => $request->user()->id,
         ]);
         
         if ($request->hasFile('files')) {

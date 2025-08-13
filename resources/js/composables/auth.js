@@ -74,9 +74,15 @@ export function auth(){
     
     const logoutUser = async () => {
         
-        try {
+        const token_auth  = localStorage.getItem('auth_token');
         
-            const response = await axios.post('/logout');
+        try {
+            
+            const response = await axios.post('/logout', {},{
+                headers: {
+                    Authorization: `Bearer ${token_auth}`
+                }
+            });
         } catch (error) {
 
             if (error.response?.status === 500) {

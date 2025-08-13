@@ -18,6 +18,7 @@ class CategoryTask extends Model implements HasMedia
         'status',
         'date_from',
         'date_to',
+        'created_by'
     ];
 
     /**
@@ -27,6 +28,11 @@ class CategoryTask extends Model implements HasMedia
      */
     public function categories(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
     }
 }

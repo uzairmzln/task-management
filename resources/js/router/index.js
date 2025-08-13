@@ -7,6 +7,9 @@ import RegisterView from '../components/register.vue';
 import ForgotPasswordView from '../components/forgotPassword.vue';
 import ForgotPasswordForm from '../components/auth/forgotPasswordForm.vue';
 import ResetPasswordForm from '../components/auth/resetPasswordForm.vue';
+import HomeView from '../components/pages/home.vue';
+import SettingView from '../components/pages/setting.vue';
+import ManageView from '../components/pages/manage.vue';
 
 const routes = [
   { 
@@ -45,6 +48,23 @@ const routes = [
     name: 'DashboardView',
     component: DashboardView,
     meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'Home',
+        component: HomeView
+      },
+      {
+        path: 'settings',
+        name: 'Settings',
+        component: SettingView
+      },
+      {
+        path: 'manages',
+        name: 'Manages',
+        component: ManageView
+      }
+    ]
   },
   {
     path: '/email-verfication',

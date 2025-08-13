@@ -37,6 +37,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
     Route::controller(DashboardController::class)->group(function (){
 
         Route::get('/user', 'index');
+        Route::get('/tasks/{id}', 'tasks');
     });
 
     Route::controller(CategoryController::class)->group(function (){

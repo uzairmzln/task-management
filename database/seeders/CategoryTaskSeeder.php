@@ -24,6 +24,7 @@ class CategoryTaskSeeder extends Seeder
                 'date_to' => now()->addDays(5),
                 'created_at' => now(),
                 'updated_at' => now(),
+                'created_by' => 2,
             ],
             [
                 'category_id' => 5,
@@ -34,6 +35,29 @@ class CategoryTaskSeeder extends Seeder
                 'date_to' => now()->addDays(3),
                 'created_at' => now(),
                 'updated_at' => now(),
+                'created_by' => 2,
+            ],
+            [
+                'category_id' => 6,
+                'name' => 'Build login page',
+                'description' => 'Implement UI and backend for login',
+                'status' => 'pending',
+                'date_from' => now()->subDays(2),
+                'date_to' => now()->addDays(5),
+                'created_at' => now(),
+                'updated_at' => now(),
+                'created_by' => 22,
+            ],
+            [
+                'category_id' => 6,
+                'name' => 'Design landing page',
+                'description' => 'Create wireframes and UI mockups',
+                'status' => 'in-progress',
+                'date_from' => now(),
+                'date_to' => now()->addDays(3),
+                'created_at' => now(),
+                'updated_at' => now(),
+                'created_by' => 22,
             ],
         ]);
     }

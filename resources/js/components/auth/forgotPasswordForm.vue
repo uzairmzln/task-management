@@ -84,7 +84,9 @@
 </style>
 <template>
     <v-form @submit.prevent="forgotPassword">
+        <!-- Show email input only if not pre-filled -->
         <v-text-field
+            v-if="!preFilledEmail"
             v-model="email"
             label="Email"
             variant="outlined"
@@ -98,7 +100,7 @@
             variant="tonal"
             class="mb-4"
             closable
-            >
+        >
             {{ alertMessage }}
         </v-alert>
 
@@ -108,18 +110,44 @@
             block
             class="mb-6 login-btn"
             elevation="0"
-            type="submit" 
+            type="submit"
+            :loading="loading"
+            :disabled="loading"
         >
-            submit
+            Submit
         </v-btn>
     </v-form>
 </template>
 <script setup>
 import { auth } from '../../composables/auth';
+import { ref } from 'vue';
+
+const props = defineProps({
+    preFilledEmail: {
+        type: String,
+        default: ''
+    }
+});
 
 const {
     email,
     alertMessage,
-    forgotPassword,
-    } = auth();
+    forgotPassword: forgotPasswordAction
+} = auth();
+
+const loading = ref(false);
+
+if (props.preFilledEmail) {
+    email.value = props.preFilledEmail;
+}
+
+const forgotPassword = async () => {
+    if (loading.value) return; 
+    loading.value = true;
+    try {
+        await forgotPasswordAction();
+    } finally {
+        loading.value = false;
+    }
+};
 </script>

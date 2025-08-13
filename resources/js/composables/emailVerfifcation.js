@@ -23,9 +23,9 @@ export function emailVerification() {
         } catch (err) {
 
             if (err.response && err.response.status === 400) {
-                error.value = err.response.data.message;
+                message.value = err.response.data.message;
             } else {
-                error.value = 'Something went wrong. Please try again.';
+                message.value = 'Something went wrong. Please try again.';
             }
         }
     }
